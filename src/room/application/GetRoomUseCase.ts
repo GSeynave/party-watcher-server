@@ -36,4 +36,12 @@ export class GetRoomUseCase {
         })) ?? [],
     };
   }
+
+  async getRoomUserCount(id: string) {
+    const room = await this.roomRepo.findById(id);
+    if (!room) {
+      throw new HttpError(404, "Room not found");
+    }
+    return room.members?.length ?? 0;
+  }
 }

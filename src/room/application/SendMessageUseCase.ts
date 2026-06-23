@@ -3,6 +3,7 @@ import { RoomRepository } from "../infra/persistence/repositories/RoomRepository
 import { UserRepository } from "../../user/infra/persistence/repositories/UserRepository.js";
 import { getIO } from "../web/websocket/index.js";
 import { Message } from "../domain/Message.js";
+import type { OutputMessage } from "../web/dto/OutputMessage.js";
 
 export class SendMessageUseCase {
   constructor(
@@ -27,12 +28,18 @@ export class SendMessageUseCase {
       Date.now(),
     );
 
+    message.resolveSender(user?.username ?? "Unknown");
     room.messages.push(message);
     await this.roomRepo.updateRoom(room.id!.toString(), room);
-    getIO().to(roomId).emit("newMessage", {
-      sender: user.mail,
-      content: messageValue,
+    const outputMessage: OutputMessage = {
+      id: message.id,
+      senderId: userId,
+      sender: user.username,
+      content: message.content,
       timestamp: message.timestamp,
-    });
+    };
+
+    console.log("Message sent: ", outputMessage);
+    getIO().to(roomId).emit("newMessage", outputMessage);
   }
 }

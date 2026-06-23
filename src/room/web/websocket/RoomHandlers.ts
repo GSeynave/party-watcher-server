@@ -28,7 +28,6 @@ export function registerRoomHandlers(io: Server, socket: Socket) {
 
   socket.on("leaveRoom", async (roomId: string) => {
     console.log(`Websocket - User left room: ${roomId}`);
-    socket.leave(roomId);
     // Get the token from the socket handshake headers, extract the user id, and remove the user from the room in the database
     console.log("Websocket - Checking auth token for leaveRoom");
     console.log(
@@ -44,7 +43,8 @@ export function registerRoomHandlers(io: Server, socket: Socket) {
     }
     await leaveRoomUseCase.leaveRoom(userId, roomId);
     io.to(roomId).emit("userLeft", {
-      message: `A user ${userId},  has left room ${roomId}`,
+      message: `User ${userId},  has left room ${roomId}`,
     });
+    socket.leave(roomId);
   });
 }

@@ -82,6 +82,18 @@ router.get("/:id", async (req: Request, res: Response) => {
   res.status(200).send(room);
 });
 
+router.get("/:id/user-count", async (req: Request, res: Response) => {
+  if (req.params.id === undefined) {
+    res.status(400).send({ error: "Room id is required" });
+    return;
+  }
+  // find the room from the database and add the user to the room
+  const userCount = await getRoomUseCase.getRoomUserCount(
+    req.params.id.toString(),
+  );
+  console.log(`Room ${req.params.id} has ${userCount} users`);
+  res.status(200).send(userCount);
+});
 router.get(
   "/:id/join",
   async (req: Request<{ id: string }>, res: Response, next: NextFunction) => {

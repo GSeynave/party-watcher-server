@@ -17,8 +17,8 @@ export class CreateRoomUseCase {
 
     var room = Room.create(
       createRoomInput.name,
-      createRoomInput.videoUrl,
       createRoomInput.userId,
+      createRoomInput.videoUrl,
     );
     room.addMember(createRoomInput.userId, user.username);
     return await this.roomRepository.createRoom(room);
