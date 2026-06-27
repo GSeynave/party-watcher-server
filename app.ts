@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
-import cors from "cors";
+//import cors from "cors";
 
 import usersRouter from "./src/user/web/controllers/UserController.js";
 import authRouter from "./src/room/web/controllers/AuthController.js";
@@ -39,13 +39,13 @@ app.use(
 );
 
 // Adds headers : Access-control-Allow-Origin: *
-app.use(
-  cors({
-    origin: clientHost,
-    credentials: true,
-  }),
-);
-app.options("*", cors());
+//app.use(
+//cors({
+//origin: clientHost,
+//credentials: true,
+//}),
+//);
+//app.options("*", cors());
 
 app.use(cookieParser());
 
