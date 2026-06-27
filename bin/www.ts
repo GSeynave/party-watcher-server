@@ -10,7 +10,6 @@ import app from "../app.js";
 
 import debugLib from "debug";
 import http from "http";
-import { connectMongo } from "../src/shared/infra/MongoClient.js";
 
 import { initSocketio } from "../src/room/web/websocket/index.js";
 
@@ -33,7 +32,6 @@ const server = http.createServer(app);
 
 initSocketio(server);
 
-await connectMongo();
 /**
  * Listen on provided port,
  * on all network interfaces.

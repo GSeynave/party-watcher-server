@@ -3,19 +3,21 @@ import { config } from "../../config.js";
 
 const uri = config.MONGO_URI as string;
 
-const client = new MongoClient(uri, {
+const options = {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
   },
-});
+};
 
-export async function connectMongo() {
-  console.log("Connecting to MongoDB...", uri);
-  await client.connect();
-}
+let client: MongoClient;
+let clientPromise: Promise<MongoClient>;
 
-export function getDb() {
-  return client.db("party-watcher");
+client = new MongoClient(uri, options);
+clientPromise = client.connect();
+
+export async function getDb() {
+  const connectedClient = await clientPromise;
+  return connectedClient.db("party-watcher");
 }
