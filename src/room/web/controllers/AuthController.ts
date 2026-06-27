@@ -19,9 +19,9 @@ router.post(
     const token = createToken(user._id!.toString(), user.mail);
 
     res.cookie("token", token, {
-      sameSite: "strict",
-      secure: false,
-      httpOnly: false,
+      sameSite: "none",
+      secure: true,
+      httpOnly: true,
       maxAge: getExpirationTime(),
       path: "/",
     });
