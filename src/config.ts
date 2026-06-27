@@ -9,4 +9,9 @@ export const config = {
     (() => {
       throw new Error("MONGO_URI is not defined");
     }),
+  CLIENT_HOST:
+    process.env.CLIENT_HOST ??
+    (() => {
+      throw new Error("CLIENT_HOST is not defined");
+    }),
 };

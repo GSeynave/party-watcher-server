@@ -3,12 +3,14 @@ import http from "http";
 import { registerRoomHandlers } from "./RoomHandlers.js";
 import { registerHeartbeatHandlers } from "./HeartbeatHandlers.js";
 import { getUserId } from "../../../shared/security/TokenHelper.js";
+import { config } from "../../../config.js";
 
 let io: Server | null = null;
 export function initSocketio(server: http.Server) {
+  const clientHost = config.CLIENT_HOST! as string;
   io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: clientHost,
       methods: ["GET", "POST"],
       credentials: true,
     },

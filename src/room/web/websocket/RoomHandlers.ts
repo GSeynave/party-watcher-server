@@ -13,12 +13,11 @@ export function registerRoomHandlers(io: Server, socket: Socket) {
   socket.on("joinRoom", (roomId: string) => {
     console.log(`Websocket - User joined room: ${roomId}`);
 
-    //
-    //if (!socket.handshake.headers.authorization) {
-    //  console.log("Websocket - No auth token, disconnecting");
-    //  socket.disconnect();
-    //  return;
-    //}
+    if (!socket.handshake.headers.authorization) {
+      console.log("Websocket - No auth token, disconnecting");
+      socket.disconnect();
+      return;
+    }
 
     socket.join(roomId);
     io.to(roomId).emit("userJoined", {

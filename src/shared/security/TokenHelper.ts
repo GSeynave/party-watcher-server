@@ -18,8 +18,8 @@ type JwtToken = {
   };
   signature: string;
 };
-const jwtSecretKey = config.JWT_SECRET_KEY!;
-const jwtExpirationTime = 4 * 60 * 60 * 1000; // 4 hours
+const jwtSecretKey = config.JWT_SECRET_KEY! as string;
+const jwtExpirationTime = 8 * 60 * 60 * 1000; // 4 hours
 export function createSignature(header: string, payload: string): string {
   return createHmac("sha256", jwtSecretKey)
     .update(header + "." + payload)

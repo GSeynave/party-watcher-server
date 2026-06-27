@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { config } from "../../config.js";
 
-const uri = config.MONGO_URI; // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const uri = config.MONGO_URI as string;
 
 const client = new MongoClient(uri, {
   serverApi: {

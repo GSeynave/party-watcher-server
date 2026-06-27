@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "tsx watch ./bin/www.ts",
-    "build": "tsc && cp -R public views dist/",
+    "build": "tsc && cp -R public dist/",
     "start": "node ./dist/bin/www.js"
   },
   "dependencies": {

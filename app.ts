@@ -15,6 +15,7 @@ import authRouter from "./src/room/web/controllers/AuthController.js";
 import roomsRouter from "./src/room/web/controllers/RoomController.js";
 
 import Middleware from "./src/shared/security/Middleware.js";
+import { config } from "./src/config.js";
 
 const app = express();
 /*
@@ -22,12 +23,7 @@ const app = express();
  */
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-/*
- * View engine setup
- */
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
+const clientHost = config.CLIENT_HOST! as string;
 
 /*
  * Middlewares
@@ -45,7 +41,7 @@ app.use(
 // Adds headers : Access-control-Allow-Origin: *
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: clientHost,
     credentials: true,
   }),
 );
